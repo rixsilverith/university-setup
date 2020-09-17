@@ -1,9 +1,10 @@
 #!/usr/bin/python3
+from pathlib import Path
 import yaml
 
 class Config():
     def __init__(self):
-        self.path = '../config.yaml'
+        self.path = Path('~/uni-setup/config.yaml').expanduser()
         self._config = self.load()
 
     def load(self):
