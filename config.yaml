@@ -1,0 +1,4 @@
+root_dir: ~/Uni
+current_semester_dir: ~/Uni/CompSci-1/semester-1
+pdf_viewer: zathura
+version: 1.0.0
