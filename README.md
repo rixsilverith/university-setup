@@ -3,10 +3,32 @@
 >
 > These scripts carry out tasks from automatically creating all the necessary files and folders for a new course to compiling all of the notes of a specific course and backing them up on the cloud.
 >
-> If you feel curious, a collection of all my lecture notes can be found [here](rixsilverith.io/lecture-notes).
+> If you feel curious, a collection of all my lecture notes can be found [here](github.com/rixsilverith/uni-notes-cw).
 
-### Work directory and course structure
-Before I begin explaining what task each script does I must talk about how is the work directory and how is each course structured. The work directory is just the folder where I keep all my university related files. It's structured as follows:
+### Getting started and configuration
+Begin by cloning this repo in your computer. I encourage you to use the [GitHub CLI](https://github.com/cli/cli):
+```bash
+gh repo clone rixsilverith/university-setup
+```
+You can always do it the classical way by running
+```bash
+git clone https://github.com/rixsilverith/university-setup.git
+```
+Inside the `university-setup` you just downloaded you'll find the `config.yaml` file. This is the main configuration file from which most of the scripts will retrieve data. Here's its content:
+```yaml
+root_dir: ~/Uni
+pdf_viewer: zathura
+```
+You should replace the `root_dir` key value with the path to the folder in which you'll place all your university related files: lecture notes, coursework, slides, etc. This folder must be structured as it's shown in the next section (`root_dir` folder and course structure). The default PDF viewer to open the compiled LaTeX files is Zathura, but you can use the one of your choice by changing the `pdf_viewer` key to the name of its executable file.
+
+You'll need [Rofi]() installed in your system for the main scripts to run properly. If you haven't installed it yet, you'll want to do it now. Otherwise, most of the scripts will just don't work.
+
+In order to run some scripts efficiently, you'll need to keybind some of them. A great tool to achieve this is [Simple X HotKey Daemon](https://github.com/baskerville/sxhkd), or *sxhkd* for short. Once it's installed in your machine copy the `sxhkd` folder inside the `university-setup` directory and paste it in your system's configuration folder, which in Arch Linux corresponds to `~/.config/`. If you pasted this folder in any other directory you should edit the path after the `-c` flag in the `launch.sh` file inside it and write where you put the `sxhkd` folder. Then, add the `launch.sh` file to your autorun so you have your keybinds available since the system start.
+
+Of course, it's essential to have [Python]() installed in your system in order to run Python scripts.
+
+### `root_dir` folder and course structure
+The `root_dir` (`Uni`) folder is the one containing all the university related files, from lecture notes to coursework and random slides and PDFs. In order for the scripts to work properly this folder should be structured as it's shown below.
 ```
 Uni
 ├── CompSci-1
@@ -24,12 +46,13 @@ Uni
 ├── CompSci-3
 └── ...
 ```
-As you can see, each year is represented its respective folder named `CompSci-x`, where x is the year. A year is split into two semesters, represented by the `semester-1` and `semester-2` folders, which both contains the courses directories of the semester. Here, the `preamble.tex` is worth of mention. It contains the preamble included in all of my LaTeX files. 
+Each year of the bachelor is represented by its respective folder named `CompSci-x`, where x is the year. A year is split into two semesters, represented by the `semester-1` and `semester-2` folders, which both contains the courses directories of corresponding to that semester. Here, the `preamble.tex` file is worth of mention. It contains the preamble included in all of the LaTeX files.
 
-*Note: If you're reading this, I assume you know, at least, what is LaTeX. If not, the [latex-project.org](https://www.latex-project.org/) website is a good starting point.*
+<!--
+*Note: If you're reading this, I assume you know, at least, what is LaTeX. If not, the [latex-project.org](https://www.latex-project.org/) website is a good starting point.* 
+-->
 
-As I mentioned earlier, the semester folders contain the course directories of that semester. Each of them is structured in the very same way:
-
+As I mentioned earlier, the `semester-1` and `semester-2` folders contain the courses I'm taking on each of the semesters. A course is structured as it's shown below.
 ```
 semester-1
 ├── CALC1
@@ -45,15 +68,18 @@ semester-1
 ├── COMPB
 └── ...
 ```
-Here, we must point out the `info.yaml` and `master.tex` files. The first one contains information about a course; it's title, short, in which group I am and the language in which the course is taken.
+Here, we must point out the `info.yaml` and `master.tex` files. The first one contains information about a course; it's title, short, in which group I am, the class/lab where it's taken and a reference to the course guide.
 ```yaml
-title: Calculus I
-short: CALC1
+title: Computer Basics
+short: COMPB
 group: 119
+p_group: 1
+class: A9
+cg: ~/Uni/CompSci-1/semester-1/COMPB/course_guide.pdf
 ```
-*Note: The semester and year is which is taken course, as well as the language, are parsed from the group number. In my university the three numbers (four, in case of practical courses) represents the semester, year and group, respectively. In this case, the group '9' refers to the english group. In practical courses, such as Computer Lab, another number is added, which represents the practice group.*
+The semester and year is which course is taken, as well as the language, are parsed from the group number. In my university the three numbers (four, in case of practical courses) represents the semester, year and group, respectively. In practical courses, such as Computer Lab, another number is added, which represents the practice group.
 
-Secondly, the `master.tex` is in charge of bundling up all the topics of the course into a single file, the one that will be compiled by LaTeX compiler.  Here is the content of the `master.tex` file:
+Secondly, the `master.tex` file is in charge of bundling up all the topics of the course into a single file, the one that will be compiled by LaTeX compiler.  Here is the content of the `master.tex` file:
 
 ```latex
 \documentclass[a4paper, twoside, 11pt]{article}
@@ -87,13 +113,12 @@ In this example, a line break will be inserted in the title beginning a new topi
 
 *Note: Each topic of a course can be thought as a 'lecture', but in reality they're not actually the same.*
 
-### Getting started and configuration
-TODO: Use Simple X HotKey Daemon to keybind scripts.
 
 ### Scripts for note-taking
-### `init_course.py`
+#### `init_course.py`
+Inititalize a new course given a title, a short and a group code. The course folder will be created on the semester and year parsed from the group code, as well as the language. The default path for the course guide is `~/Uni/CompSci-x/semester-x/course_short/course_guide.pdf`, and it should be changed manually in case of need.
 
-### `courses.py`
+#### `courses.py`
 In this file the `Course` and `Courses` classes are defined. The later is just a list of `Course`s in the `Uni` folder, while the former represents a course directory. A `Course` has a `short`, a `path` and an `info` property, a Python dictionary from which you can retrieve information about the course. This info is collected from the `info.yaml` file in the course folder. You can also access the course topics by reading the `topics` property, which is a `Topics` object (a list of `Topic`s).
 
 You can get a specific `Course` from the `Courses` object given its `short` using the `get(course_short)` method from the `Courses` class. Here's an example:
@@ -103,20 +128,22 @@ print(course.info['title'])
 # Output: Computer Structure
 ```
 
-### `topics.py`
+#### `topics.py`
 
-### `config.py`
+#### `config.py`
+Defines the `Config` class, which acts as a helper to interact with the `config.yaml` file.
 
-### `compile_sync_notes.py`
+#### `compile_sync_notes.py`
 
-### `rofi.py`
+#### `rofi.py`
+A wrapper function for Rofi.
 
-### `rofi_notes.py`
+#### `rofi_notes.py`
 
-### `rofi_edit_topic.py`
+#### `rofi_edit_topic.py`
 
-### `util.py`
+#### `util.py`
 
 ### Scripts to improve programming workflow
-### `compile_c_and_run.py`
+#### `compile_c_and_run.py`
 
