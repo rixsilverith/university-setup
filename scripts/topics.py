@@ -68,6 +68,14 @@ class Topics(list):
         self.read_files()
         return Topic(new_topic_path, self.course)
 
+    def compile_master(self):
+        result = subprocess.run(
+            ['latexmk', '-f', '-interaction=nonstopmode', str(self.master_file)],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            cwd=str(self.root)
+        )
+
 class Topic():
     def __init__(self, file_path, course):
         with open(file_path) as file:

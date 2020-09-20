@@ -113,12 +113,3 @@ class Course():
         #subprocess.run(['cp', '-r', course_figures_template_dir, course_figures_dir])
 
         #os.mkdir(course_figures_dir)
- 
-
-
-
-
-
-
-
-

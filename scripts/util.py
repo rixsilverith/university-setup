@@ -22,8 +22,8 @@ def copydir(src, dest):
     except OSError as e:
         print(colored(f'Dir not copied. Error: {e}', 'red'))
 
-def printa(text, color = 'green', full = False):
-    if full:
+def printa(text, color = 'green', full_color = False):
+    if full_color:
         print(colored(f'==> {str(text)}', color))
     else:
         print(colored('==>', color), text)
