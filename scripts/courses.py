@@ -59,19 +59,15 @@ class Course():
     def init_info(course_dir, course_title, course_short, group, lang):
         printa('Creating \'info.yaml\'...')
         course_info_file = Path(os.path.join(course_dir, 'info.yaml')).expanduser()
-
         info = parse_group_code(str(group))
 
         course_info = {}
         course_info['title'] = str(course_title)
         course_info['short'] = str(course_short)
-        #course_info['year'] = get_current_semester()['year']
-        #course_info['semester'] = get_current_semester()['semester']
         course_info['year'] = info['year']
         course_info['semester'] = info['semester']
         course_info['group'] = int(group)
         course_info['lang'] = str(info['lang'])
-        #course_info['lang'] = lang
         dump_yaml(course_info_file, course_info)
 
     @staticmethod

@@ -50,6 +50,8 @@
 \let\iff\Leftrightarrow
 \let\epsilon\varepsilon
 
+\newcommand\rela{\ensuremath{\mathcal{R}}}
+
 \newcommand\N{\ensuremath{\mathbb{N}}}
 \newcommand\Z{\ensuremath{\mathbb{Z}}}
 \newcommand\Q{\ensuremath{\mathbb{Q}}}
@@ -59,6 +61,7 @@
 
 \DeclareMathOperator{\arcctan}{arcctan}
 \DeclareMathOperator{\arctanh}{arctanh}
+\DeclareMathOperator{\card}{card}
 \DeclareMathOperator{\tq}{\, |\,}
 
 \newcommand\hide[1]{}
@@ -208,7 +211,7 @@
 \newenvironment{definition}[1][]{%
     \refstepcounter{theorem}
     \mdfsetup{linecolor=black, linewidth=2pt, topline=false, bottomline=false, rightline=false}
-    \begin{mdframed}\relax\textbf{Definition~\thetheorem.}~#1
+    \begin{mdframed}[]\relax\textbf{Definition~\thetheorem.}~
 }{\end{mdframed}}
 
 % {proposition} environment definition. Usage:
@@ -276,6 +279,12 @@
     \begin{mdframed}\relax\textbf{Property~\theprop.}~
 }{\end{mdframed}}
 
+% {notation} environment definition.
+\newenvironment{notation}[1][]{%
+    \mdfsetup{linecolor=black, linewidth=2pt, topline=false, bottomline=false, rightline=false}
+    \begin{mdframed}\relax\emph{Notation.}~
+}{\end{mdframed}}
+
 % {program} environment definition.
 % This environment should be used along with the \inputcprogram{} command.
 \newenvironment{program}[1][]{%
@@ -289,7 +298,7 @@
 \newenvironment{teorema}[1][]{%
     \refstepcounter{theorem}
     \mdfsetup{linecolor=black, linewidth=2pt, topline=false, bottomline=false, rightline=false}
-    \begin{mdframed}\relax\textbf{Teorema~\thetheorem.}~\it{#1}
+    \begin{mdframed}\relax\textbf{Teorema~\thetheorem.}~\it
 }{\end{mdframed}}
 
 % Spanish environment for the {definition} environment.
@@ -336,7 +345,7 @@
 % Spanish equivalent for the {remark} environment.
 \newenvironment{observacion}[1][]{%
     \mdfsetup{linecolor=black, linewidth=2pt, topline=false, bottomline=false, rightline=false}
-    \begin{mdframed}\relax\it{Observación.}~#1
+    \begin{mdframed}\relax\emph{Observación.}~#1
 }{\end{mdframed}}
 
 % Spanish equivalent for the {proof} environment.
@@ -350,6 +359,12 @@
     \refstepcounter{prop}\par\medskip
     \textbf{Propiedad~\theprop.}~#1
 }{\medskip}
+
+% Spanish equivalent for the {notation} environment.
+\newenvironment{notacion}[1][]{%
+    \mdfsetup{linecolor=black, linewidth=2pt, topline=false, bottomline=false, rightline=false}
+    \begin{mdframed}\relax\emph{Notación.}~
+}{\end{mdframed}}
 
 % Alternative boxes for theorems, definitions, etc. If wanted to use,
 % just remove the \hide{} command here and \hide the section above.
