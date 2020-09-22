@@ -7,7 +7,7 @@ courses = Courses()
 sorted_courses = sorted(courses, key=lambda l: l.info['title'])
 
 course_list = [
-    '{course_title}   <b><span size="x-small" background="black" rise="2000"> {course_short} {group} </span></b>'.format(
+    '{course_title}      <b><span size="x-small" rise="2000"> {course_short} {group} </span></b>'.format(
         course_title = course.info['title'],
         course_short = course.info['short'],
         group = course.info['group']
@@ -24,8 +24,6 @@ def rofi_courses():
 
     if index >= 0:
         return index
-
-        #print(f'Selected course is {sorted_courses[index].info["short"]}')
 
 if __name__ == '__main__':
     index = rofi_courses()

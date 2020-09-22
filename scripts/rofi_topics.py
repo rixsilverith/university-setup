@@ -8,10 +8,10 @@ topics = sorted_courses[sorted_course_index].topics
 sorted_topics = sorted(topics, key=lambda l: -l.number)
 
 options = [
-    '{number: >2}. <b>{title}</b>       <i><span size="smaller"> ({course_title} {group}) </span></i>'.format(
+    '{number: >2}. {title}      <b><span size="x-small" rise="2000"> {course_short} {group} </span></b>'.format(
         number = topic.number,
         title = topic.title,
-        course_title = topic.course.info['short'],
+        course_short = topic.course.info['short'],
         group = topic.course.info['group']
     ) for topic in sorted_topics
 ]
@@ -24,7 +24,6 @@ key, index, selected = rofi('Select topic', options, [
 ])
 
 if key == 0:
-    # print(f'Selected topic is: {sorted_topics[index].title}')
     sorted_topics[index].edit()
 elif key == 1:
     new_topic = topics.new_topic()
