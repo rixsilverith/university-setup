@@ -28,7 +28,7 @@ for course in Courses():
 
     printa(f'Copying \'{title} ({short} {group}).pdf\' to {compiled_notes_dir}/...')
     compiled_master_path = path.join(course.path, 'master.pdf')
-    dst_compiled_master_path = path.join(compiled_notes_dir, f'{course.info["title"]} ({course.info["short"]}).pdf')
+    dst_compiled_master_path = path.join(compiled_notes_dir, f'{title} ({short} {group}).pdf')
     copyfile(Path(compiled_master_path).expanduser(), Path(dst_compiled_master_path).expanduser())
 
     # Copy the source folder of the course
