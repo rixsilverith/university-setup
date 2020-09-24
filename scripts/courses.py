@@ -23,7 +23,9 @@ class Courses(list):
         root_dir = Path(Config().get('root_dir')).expanduser()
         for course_info_file in root_dir.glob('**/*.yaml'):
             course_dir = str(course_info_file).replace('/info.yaml', '')
-            self._courses.append(Course(Path(course_dir).expanduser()))
+            # Exclude courses folders in 'Uni/out/'
+            if not 'out' in course_dir:
+                self._courses.append(Course(Path(course_dir).expanduser()))
         return sorted(self._courses, key=lambda c: c.short)
 
     def get(self, course_short):
