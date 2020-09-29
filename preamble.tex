@@ -17,12 +17,15 @@
 \usepackage[T1]{fontenc}
 \usepackage[english]{babel}
 
+\usepackage{blindtext}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
 \usepackage{spalign}
 \usepackage{multirow}
 \usepackage{afterpage}
 \usepackage{graphicx}
+\usepackage{subcaption}
+%\usepackage{float}
 \usepackage[format=plain, textfont=it]{caption}
 
 \usepackage{amsmath, amssymb, amsthm, commath}
@@ -35,7 +38,6 @@
 
 \usepackage{mathpazo}
 \usepackage{domitian}
-\let\oldstylenums\oldstyle
 
 \renewcommand{\footrulewidth}{0pt}
 \renewcommand{\labelitemi}{$\bullet$}
@@ -49,8 +51,12 @@
 \let\impliedby\Leftarrow
 \let\iff\Leftrightarrow
 \let\epsilon\varepsilon
+\let\leq\leqslant
+\let\nleq\nleqslant
+\let\geq\geqslant
+\let\ngeq\ngeqslant
 
-\newcommand\rela{\ensuremath{\mathcal{R}}}
+\let\oldstylenums\oldstyle
 
 \newcommand\N{\ensuremath{\mathbb{N}}}
 \newcommand\Z{\ensuremath{\mathbb{Z}}}
@@ -58,6 +64,7 @@
 \newcommand\R{\ensuremath{\mathbb{R}}}
 \newcommand\C{\ensuremath{\mathbb{C}}}
 \renewcommand\O{\ensuremath{\emptyset}}
+\newcommand\rela{\ensuremath{\mathcal{R}}}
 
 \DeclareMathOperator{\arcctan}{arcctan}
 \DeclareMathOperator{\arctanh}{arctanh}
@@ -75,10 +82,12 @@
     \fancyfoot[C]{\thepage}}
 
 % Style to display headers in most of the pages.
+\renewcommand{\subsectionmark}[1]{\markright{#1}{}}
 \fancypagestyle{withheaders}{%
     \fancyhead{}
     \fancyfoot{}
-    \fancyhead[LO, RE]{\nouppercase\leftmark}
+    \fancyhead[RE]{\nouppercase\rightmark}
+    \fancyhead[LO]{\nouppercase\leftmark}
     \fancyfoot[C]{\thepage}}
 
 % Default page style.
@@ -144,9 +153,20 @@
     \thispagestyle{noheaders}
     \section[#2]{#1}}
 
+\newcommand\cwtitle[1]{%
+    \newpage
+    \thispagestyle{noheaders}
+    \refstepcounter{section}
+    \begin{center}
+        \LARGE\textbf{#1}
+    \end{center}
+    \vskip1cm}
+
 \newenvironment{paragraf}[1][]{%
     \noindent\textbf{#1.}~
 }{\medskip}
+
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
 
 % -----------------------------------------------------------------
 % The following section contains different definitions for
@@ -172,6 +192,8 @@
 \renewcommand{\theprop}{\arabic{section}.\arabic{prop}}
 \newcounter{program}[section]\setcounter{program}{0}
 \renewcommand{\theprogram}{\arabic{section}.\arabic{program}}
+\newcounter{problem}[section]\setcounter{problem}{0}
+\renewcommand{\theproblem}{\arabic{section}.\arabic{problem}}
 
 % {theorem} environment definition. Usage:
 % \begin{theorem}[Cool theorem name]{reference}\end{theorem}
@@ -243,7 +265,7 @@
 \newenvironment{example}[1][]{%
     \refstepcounter{example}
     \mdfsetup{linecolor=black, linewidth=2pt, topline=false, bottomline=false, rightline=false}
-    \begin{mdframed}\relax\textbf{Example~\theexample.~#1} \\ 
+    \begin{mdframed}\relax\textbf{Example~\theexample.}~ 
 }{\end{mdframed}}
 
 % {note} environment definition. Usage:
@@ -284,6 +306,13 @@
     \mdfsetup{linecolor=black, linewidth=2pt, topline=false, bottomline=false, rightline=false}
     \begin{mdframed}\relax\emph{Notation.}~
 }{\end{mdframed}}
+
+% {problem} environment definition.
+\newenvironment{problem}[1][]{%
+    \refstepcounter{problem}
+    \mdfsetup{linecolor=black, linewidth=2pt, topline=false, bottomline=false, rightline=false}
+    \begin{mdframed}\relax\textbf{Problem~\theproblem.}~#1 \end{mdframed} \\ \\
+}{}
 
 % {program} environment definition.
 % This environment should be used along with the \inputcprogram{} command.

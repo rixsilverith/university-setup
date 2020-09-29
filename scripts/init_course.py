@@ -3,10 +3,9 @@ from courses import Courses
 from util import printa
 
 print('==============================')
-course_title = input('--> Title: ')
-course_short = input('--> Short: ')
-group = input('--> Group: ')
-lang = input('--> Language: ')
+course_title = input('? Title: ')
+course_short = input('? Short: ')
+group = input('? Group: ')
 print('==============================')
 
 Courses.init_course(course_title, course_short, group, lang)
